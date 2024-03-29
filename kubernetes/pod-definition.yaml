@@ -1,12 +1,12 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  name: myapp
+  name: mywebserver
   labels:
-    tier: web-app
+    tier: web-server
 spec:
   containers:
-  - name: nginx
-    image: nginx:1.25.4
+  - name: httpd
+    image: httpd: 2.4
     ports:
     - containerPort: 80
