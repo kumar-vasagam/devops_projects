@@ -18,15 +18,13 @@ spec:
 apiVersion: v1
 kind: Pod
 metadata:
-  name: dbapp
+  name: redis
   labels:
-    tier: db-app
+    tier: redis
 spec:
   nodeName: node01
   containers:
   - name: nginx
     image: nginx:1.25.4
     ports:
-    - containerPort: 80
-  nodeSelector:
-    distype: ssd
+    - containerPort: 443
