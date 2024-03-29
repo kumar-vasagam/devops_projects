@@ -1,10 +1,10 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: web-server
+  name: my-web-server
 spec:
   selector:
-    app: httpd
+    tier: web-server
   type: NodePort
   ports:
   - protocol: TCP
