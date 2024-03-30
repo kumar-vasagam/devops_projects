@@ -28,5 +28,5 @@ spec:
   initContainers:
   - name: init-myservice
     image: busybox:1.28
-    command: ['sh', '-c', "Hello there!"]
+    command: ['sh', '-c', "echo Hello there!"]
 
