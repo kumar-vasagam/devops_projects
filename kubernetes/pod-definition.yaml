@@ -5,6 +5,8 @@ metadata:
   labels:
     tier: web-server
 spec:
+  os:
+   name: linux
   containers:
   - name: httpd
     image: httpd:2.4
