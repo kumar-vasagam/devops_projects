@@ -3,4 +3,11 @@ kind: Namespace
 metadata:
   name: development
   labels:
-    name: development
+    name: dev
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: production
+  labels:
+    name: prod
