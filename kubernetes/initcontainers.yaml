@@ -9,7 +9,7 @@ spec:
     ports:
     - containerPort: 80
   initContainers:
-    name: my-init-container
+  - name: my-init-container
     image: busybox:1.28
     command: ['sh', '-c', 'echo The Init Container is running! && sleep 3600']
   
