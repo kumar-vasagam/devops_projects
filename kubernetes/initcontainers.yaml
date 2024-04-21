@@ -4,7 +4,7 @@ metadata:
   name: my-regular-container
 spec:
   containers:
-    name: my-webserver
+  - name: my-webserver
     image: nginx:1.14.2
     - ports:
       containerPort: 80
