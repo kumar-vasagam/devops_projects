@@ -1,26 +1,23 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  name: myapp
-  labels:
-    tier: web-app
+  name: proxy
 spec:
   containers:
   - name: nginx
-    image: nginx:1.25.4
+    image: nginx:latest
     ports:
     - containerPort: 80
-
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: Web-Server
+  name: my-web-service
 spec:
   selector:
-    app: httpd
-  type: NodePort
+    name: proxy
   ports:
-  - protocol: TCP
+  - name: name-of-service-port
     port: 80
     targetPort: 80
+
