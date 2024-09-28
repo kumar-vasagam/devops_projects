@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+ name: myconfigmap
+data:
+ dbhost: localhost
+ timeout: "16"
+immutable: true
+---
+apiVersion: v1
+kind: Pod
+metadata:
+ name: mybb
+spec:
+ containers:
+   - name: busybox
+     image: busybox:latest
+     command: ["/bin/sh", "-c", "printenv"]
+     envFrom:
+       - configMapRef:
+           name: myconfigmap

@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: my-server
+  labels:
+    app: myapp
+#    type: webserver
+#    planet9.org/location: custom-dc
+#    planet9.org/availability: east-west 
+spec:
+  containers:
+  - name: nginx
+    image: nginx:1.14.2
+    ports:
+    - containerPort: 80
