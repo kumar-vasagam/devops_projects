@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: myresultset
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      tier: web-app
+  template:
+   metadata:
+    labels:
+      tier: web-app
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:1.25.4
+        ports:
+          - containerPort: 80
