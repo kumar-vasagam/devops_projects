@@ -1,0 +1,46 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: my-pod
+  labels:
+    env: DEV
+  annotations:
+    loc: Stay9
+spec:
+  containers:
+  - image: nginx
+    name: enginex
+---
+
+apiVersion: v1
+kind: Pod
+metadata:
+ name: mynewpod
+ labels:
+   podloc: richmond
+spec:
+ containers:
+ - image: nginx
+   name: web-server
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: me-dep-1
+  labels:
+    app: webserver
+spec:
+  replicas : 3
+  selector:
+      matchExpressions:
+        - {key: podloc, operator: In, values: [richmond]}
+  template:
+    metadata:
+      name: mydeploymentpod
+      labels:
+        podloc: richmond
+    spec:
+      containers:
+      - name: my-web-server
+        image: nginx
