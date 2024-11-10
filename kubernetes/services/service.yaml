@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: my-we-service-svc
+spec:
+  selector:
+    tier: frontend
+  ports:
+    - port: 80
+      nodePort: 32244
+      targetPort: 80
+      name: std-http-port

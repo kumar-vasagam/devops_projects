@@ -11,10 +11,10 @@ spec:
       mountPath: "/config"
       readOnly: true
   volumes:
-    name: config
-    configMap:
-      name: db-config
-      items:
-      - key: "DB_HOST"
-        path: "DB_HOST"
+    - name: config
+      configMap:
+        name: db-config
+        items:
+        - key: "DB_HOST"
+          path: "DB_HOST"
 
