@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: test-bb
+  namespace: test
+spec:
+  containers:
+    - name: mybusybox
+      image: busybox:latest
+      command: ["/bin/sh"]
+      args: ["-c", "echo Sleeping... > /logs/log.txt && sleep 3600"]
+      volumeMounts:
+        - name: my-empty-dir
+          mountPath: /logs
+  restartPolicy: Never
+  volumes:
+    - name: my-empty-dir
+      emptyDir: {}

@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: test-hp
+  namespace: test
+spec:
+  containers:
+    - name: mybusybox
+      image: busybox:latest
+      command: ["/bin/sh"]
+      args: ["-c", "echo Sleeping on host path... > /config/config.conf && sleep 3600"]
+      volumeMounts:
+        - name: my-hostpath-dir
+          mountPath: /config
+  restartPolicy: Never
+  volumes:
+    - name: my-hostpath-dir
+      hostPath:
+        path: /config

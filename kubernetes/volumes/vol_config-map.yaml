@@ -1,0 +1,33 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: myapp
+  labels:
+    name: myapp
+spec:
+  containers:
+  - name: myapp
+    image: busybox:latest
+    command: ["/bin/sh"]
+    args: ["-c", "sleep 3600"]
+    volumeMounts:
+      - name: my-cm-vol
+        mountPath: /logs
+  volumes:
+    - name: my-cm-vol
+      configMap:
+        name: db-config
+
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: db-config
+data:
+  dbUserName: SuperUser
+  dbPassword: Passw0rd!
+  mongoconf: |
+    databaseName: students
+    collections: classes
+    enrollment: 2025

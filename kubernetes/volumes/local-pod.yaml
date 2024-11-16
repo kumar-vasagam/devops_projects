@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: local-pod
+spec:
+  containers:
+    - name: my-local-bb
+      image: busybox:latest
+      command: ["/bin/sh"]
+      args: ["-c", "echo Sleeping on host path... > /etc/local/logs.log && sleep 3600"]
+      volumeMounts:
+        - name: my-pvc
+          mountPath: /etc/local
+  volumes:
+    - name: my-pvc
+      persistentVolumeClaim:
+        claimName: mypvc
