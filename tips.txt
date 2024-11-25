@@ -2,3 +2,5 @@ minikube start
 
 minikube dashboard
 
+https://manjit28.medium.com/powershell-define-shortcut-alias-for-common-kubernetes-commands-1c006d68cce2
+- Set-Alias -Name k -Value kubectl
