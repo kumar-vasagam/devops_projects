@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: gated-pod
+spec:
+  schedulingGates:
+    - name: busy-body/foo
+    - name: busy-body/bar
+  containers:
+    - name: busy-body
+      image: busybox:latest
