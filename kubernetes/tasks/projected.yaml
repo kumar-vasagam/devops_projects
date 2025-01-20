@@ -1,0 +1,66 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: simple-cm
+data:
+  dbUser: superUser
+  dbPass: superPassword
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: file-cm
+data:
+  mongo-conf: mongo.conf
+  
+  mongo.conf: |
+    db.name=students
+    collection.name=classes
+    ai.enabled=true
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: un-projected-pod
+spec:
+  containers:
+    - name: my-busy-box
+      image: busybox:latest
+      command:
+        - "sleep"
+        - "3600"
+      volumeMounts:
+        - name: con-mnt-path
+          mountPath: /etc/config
+        - name: mongo-path
+          mountPath: /etc/config/mongo
+  volumes:
+    - name: con-mnt-path
+      configMap:
+        name: projected-cm
+    - name: mongo-path
+      configMap:
+        name: file-cm
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: projected-pod
+spec:
+  containers:
+    - name: my-busy-box
+      image: busybox:latest
+      command:
+        - "sleep"
+        - "3600"
+      volumeMounts:
+        - name: all-in-one
+          mountPath: /etc/config
+  volumes:
+    - name: all-in-one
+      projected:
+        sources:
+          - configMap:
+              name: simple-cm
+          - configMap:
+              name: file-cm

@@ -1,39 +1,19 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  name: volumeMountedConfigPod
-spec:
-  containers:
-  - name: nginx
-    image: nginx:1.14.2
-    volumeMounts:
-    - name: config
-      mountPath: "/config"
-      readOnly: true
-  volumes:
-    - name: config
-      configMap:
-        name: db-config
-        items:
-        - key: "DB_HOST"
-          path: "DB_HOST"
-
----
-apiVersion: v1
-kind: Pod
-metadata:
-  name: kubernetes-downwardapi-volume-example
+  name:
+    downward-api-vol-example
   labels:
-    zone: us-est-coast
-    cluster: test-cluster1
-    rack: rack-22
+    region: us-east-2
+    temperature: F
+    distance: miles
   annotations:
-    build: two
-    builder: john-doe
+    tool: killercoda
+    alt-tool: k8slibrary
 spec:
   containers:
-    - name: client-container
-      image: registry.k8s.io/busybox
+    - name: busy-container
+      image: busybox:latest
       command: ["sh", "-c"]
       args:
       - while true; do
@@ -44,11 +24,11 @@ spec:
           sleep 5;
         done;
       volumeMounts:
-        - name: podinfo
+        - name: downward-volume
           mountPath: /etc/podinfo
   volumes:
-    - name: podinfo
-      downwardAPI:
+     - name: downward-volume
+       downwardAPI:
         items:
           - path: "labels"
             fieldRef:

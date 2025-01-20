@@ -1,0 +1,39 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: client
+spec:
+  containers:
+    - name: alpine-client
+      image: alpine:latest
+      command: ["/bin/sh"]
+      args: ["-c", "sleep 3600"]
+
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: server
+  labels:
+    app: server-daemon
+spec:
+  containers:
+    - name: ngingx-server
+      image: nginx:latest
+      ports:
+        - containerPort: 80
+          protocol: TCP
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: server-service
+spec:
+  type: ClusterIP
+  selector:
+    app: server-daemon
+  ports:
+    - port: 8080
+      targetPort: 80
+        

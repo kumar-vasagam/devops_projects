@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my-deployer
+  labels:
+    app: front-end-deployer
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: front-end
+  template:
+    metadata:
+      labels: 
+        app: front-end
+    spec:
+      containers:
+        - name: web-server
+          image: nginx:latest
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my-cache-deployer
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: cache-server
+  template:
+    metadata:
+      labels:
+        app: cache-server
+    spec:
+      containers:
+        - name: cache-component
+          image: redis:latest
+---
