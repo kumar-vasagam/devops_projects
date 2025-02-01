@@ -1,12 +1,23 @@
 apiVersion: v1
+kind: Pod
+metadata:
+  name: proxy
+spec:
+  containers:
+  - name: nginx
+    image: nginx:latest
+    ports:
+    - containerPort: 80
+---
+apiVersion: v1
 kind: Service
 metadata:
-  name: my-we-service-svc
+  name: my-web-service
 spec:
   selector:
-    tier: frontend
+    name: proxy
   ports:
-    - port: 80
-      nodePort: 32244
-      targetPort: 80
-      name: std-http-port
+  - name: name-of-service-port
+    port: 80
+    targetPort: 80
+
