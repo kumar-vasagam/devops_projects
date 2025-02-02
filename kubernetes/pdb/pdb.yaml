@@ -1,0 +1,28 @@
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: first-pdb
+spec:
+  maxUnavailable: 1
+  selector:
+    matchLabels:
+      tier: web
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pdb-deployment
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      tier: web
+  template:
+    metadata:
+      name: my-web-app
+      labels:
+        tier: web
+    spec:
+      containers:
+        - name: my-web-app
+          image: nginx:latest
