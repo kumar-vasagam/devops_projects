@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: web-server
+spec:
+  tolerations:
+    - key: president
+      operator: "Equals"
+      value: trump
+      effect: "NoSchedule"
+  containers:
+    - name: we-server-c
+      image: nginx:latest

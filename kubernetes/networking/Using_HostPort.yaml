@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-using-host-port
+spec:
+  containers:
+    - name: web-server
+      image: nginx:latest
+      ports:
+        - hostPort: 8080
+          containerPort: 8080
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-using-host-network
+spec:
+  hostNetwork: true
+  containers:
+    - name: web-server
+      image: nginx:latest
+---
