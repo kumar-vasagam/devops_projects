@@ -1,0 +1,45 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: burstable-pod
+  labels:
+    burstable: pod
+spec:
+  containers:
+    - name: web-app
+      image: nginx:latest
+      resources:
+        limits:
+          memory: 500Mi
+        requests:
+          memory: 250Mi
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: guaranteed-pod
+  labels:
+    guaranteed: pod
+spec:
+  containers:
+    - name: g-web-app
+      image: nginx:latest
+      resources:
+        limits:
+          memory: 500Mi
+          cpu: 2
+        requests:
+          memory: 500Mi
+          cpu: 2
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: best-effort-pod
+  labels:
+    guaranteed: pod
+spec:
+  containers:
+    - name: be-web-app
+      image: nginx:latest
+---
