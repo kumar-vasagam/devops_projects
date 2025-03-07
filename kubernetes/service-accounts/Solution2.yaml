@@ -1,0 +1,71 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: prod-secret
+  annotations:
+    kubernetes.io/service-account.name: "prod-sa"
+stringData:
+  appSecret: donttellanyone
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: test-secret
+stringData:
+  appSecret: idontcare
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: prod-sa
+  annotations:
+    kubernetes.io/enforce-mountable-secrets: "true"
+secrets:
+  - apiVersion: v1
+    name: prod-secret
+    kind: Secret
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: test-sa
+secrets:
+  - apiVersion: v1
+    name: test-secret
+    kind: Secret
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: prod-server
+  annotations:
+    kubernetes.io/enforce-mountable-secrets: "true"
+spec:
+  serviceAccountName: prod-sa
+  containers:
+    - name: app-server
+      image: nginx:latest
+      env:
+        - name: SECRET_NAME
+          valueFrom: 
+            fieldRef:
+              apiVersion: v1
+              fieldPath: spec.serviceAccountName
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: test-server
+  annotations:
+    kubernetes.io/enforce-mountable-secrets: "true"
+spec:
+  serviceAccountName: test-sa
+  containers:
+    - name: app-server
+      image: nginx:latest
+      env:
+        - name: SECRET_NAME
+          valueFrom: 
+            fieldRef:
+              apiVersion: v1
+              fieldPath: spec.serviceAccountName
